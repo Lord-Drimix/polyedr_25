@@ -59,3 +59,27 @@ class TestPolyedr(unittest.TestCase):
             self.polyedr = Polyedr(fake_file_path)
             _file.assert_called_once_with(fake_file_path)
         self.assertAlmostEqual(self.polyedr.shad(), 2)
+
+    def test_perimeter3(self):
+        fake_file_content = """100.0	0.0	0.0	0.0
+8	6	24
+1	1	1
+1	-1	1
+-1	-1	1
+-1	1	1
+2	2	5
+2	-2	5
+-2	-2	5
+-2	2	5
+4	1    2    3    4
+4	5    6    2    1
+4	3    2    6    7
+4	3    7    8    4
+4	1    4    8    5
+4	5    6    7    8"""
+        fake_file_path = 'data/cccc.geom'
+        with patch('shadow.polyedr.open'.format(__name__),
+                   new=mock_open(read_data=fake_file_content)) as _file:
+            self.polyedr = Polyedr(fake_file_path)
+            _file.assert_called_once_with(fake_file_path)
+        self.assertAlmostEqual(self.polyedr.shad(), 8)
